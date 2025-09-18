@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>计算机科学技术协会</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<script>
+		tailwind.config = {
+			theme: {
+				extend: {
+					colors: {
+						primary: '#2563eb',
+						secondary: '#7c3aed',
+						accent: '#db2777',
+					},
+					animation: {
+						'float': 'float 6s ease-in-out infinite',
+						'glow': 'glow 2s ease-in-out infinite alternate',
+					},
+					keyframes: {
+						float: {
+							'0%, 100%': { transform: 'translateY(0)' },
+							'50%': { transform: 'translateY(-10px)' },
+						},
+						glow: {
+							'0%': { boxShadow: '0 0 5px #2563eb, 0 0 10px #2563eb, 0 0 15px #2563eb' },
+							'100%': { boxShadow: '0 0 10px #2563eb, 0 0 20px #2563eb, 0 0 30px #2563eb' },
+						}
+					}
+				}
+			}
+		}
+	</script>
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+		body {
+			font-family: 'JetBrains Mono', monospace;
+			scroll-behavior: smooth;
+			background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+		}
+
+		.tech-bg {
+			background: linear-gradient(to bottom, #1e293b, #0f172a);
+		}
+
+		.card-hover {
+			transition: all 0.3s ease;
+		}
+
+		.card-hover:hover {
+			transform: translateY(-5px) scale(1.02);
+			box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.4);
+		}
+
+		.typewriter {
+			overflow: hidden;
+			border-right: .15em solid #2563eb;
+			white-space: nowrap;
+			animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+		}
+
+		@keyframes typing {
+			from {
+				width: 0
+			}
+
+			to {
+				width: 100%
+			}
+		}
+
+		@keyframes blink-caret {
+
+			from,
+			to {
+				border-color: transparent
+			}
+
+			50% {
+				border-color: #2563eb
+			}
+		}
+
+		.particles {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: -1;
+		}
+
+		.particle {
+			position: absolute;
+			background: rgba(37, 99, 235, 0.5);
+			border-radius: 50%;
+			animation: float 15s infinite linear;
+		}
+
+		@keyframes particle-float {
+			0% {
+				transform: translateY(0) rotate(0deg);
+				opacity: 1;
+			}
+
+			100% {
+				transform: translateY(-1000px) rotate(720deg);
+				opacity: 0;
+			}
+		}
+
+		.qr-code {
+			transition: all 0.3s ease;
+		}
+
+		.qr-code:hover {
+			transform: scale(1.05);
+			box-shadow: 0 0 20px rgba(37, 99, 235, 0.5);
+		}
+	</style>
+</head>
+
+<body class="text-gray-100 min-h-screen tech-bg">
+	<!-- 粒子背景 -->
+	<div class="particles" id="particles"></div>
+
+	<!-- 导航栏 -->
+	<nav class="fixed w-full bg-opacity-90 bg-gray-900 backdrop-blur-sm z-50 py-4 px-6 shadow-lg">
+		<div class="container mx-auto flex justify-between items-center">
+			<div class="flex items-center space-x-2">
+				<div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center animate-glow">
+					<i class="fas fa-microchip text-white"></i>
+				</div>
+				<span
+					class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">计算机科协</span>
+			</div>
+			<div class="hidden md:flex space-x-8">
+				<a href="#about" class="hover:text-blue-400 transition-colors">协会介绍</a>
+				<a href="#benefits" class="hover:text-blue-400 transition-colors">收获成长</a>
+				<a href="#departments" class="hover:text-blue-400 transition-colors">部门速览</a>
+				<a href="#join" class="hover:text-blue-400 transition-colors">加入我们</a>
+			</div>
+			<div class="md:hidden">
+				<button id="menu-btn" class="text-2xl">
+					<i class="fas fa-bars"></i>
+				</button>
+			</div>
+		</div>
+	</nav>
+
+	<!-- 移动端菜单 -->
+	<div id="mobile-menu"
+		class="fixed top-0 right-0 h-full w-64 bg-gray-900 shadow-lg transform translate-x-full transition-transform z-50 p-6">
+		<button id="close-menu" class="absolute top-4 right-4 text-2xl">
+			<i class="fas fa-times"></i>
+		</button>
+		<div class="flex flex-col space-y-6 mt-16">
+			<a href="#about" class="text-lg hover:text-blue-400 transition-colors">协会介绍</a>
+			<a href="#benefits" class="text-lg hover:text-blue-400 transition-colors">收获成长</a>
+			<a href="#departments" class="text-lg hover:text-blue-400 transition-colors">部门速览</a>
+			<a href="#join" class="text-lg hover:text-blue-400 transition-colors">加入我们</a>
+		</div>
+	</div>
+
+	<!-- 主标题区域 -->
+	<section class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+		<div class="container mx-auto px-6 text-center z-10">
+			<h1 class="text-5xl md:text-7xl font-bold mb-6 animate-float">
+				<span
+					class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">欢迎加入计算机科协</span>
+			</h1>
+			<p class="text-xl md:text-2xl mb-10 text-gray-300 typewriter">你的大学科技赛事第一站❤️🧡💛💚💙💜</p>
+			<div class="flex flex-wrap justify-center gap-6">
+				<a href="#about"
+					class="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full font-bold hover:from-blue-600 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg">
+					了解更多
+				</a>
+				<a href="#join"
+					class="px-8 py-3 border-2 border-blue-500 text-blue-400 rounded-full font-bold hover:bg-blue-500 hover:text-white transition-all">
+					立即加入
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- 协会介绍 -->
+	<section id="about" class="py-20 px-6">
+		<div class="container mx-auto">
+			<h2 class="text-3xl md:text-4xl font-bold text-center mb-16">
+				<span class="border-b-4 border-blue-500 pb-2">🚀 我们是？</span>
+			</h2>
+			<div
+				class="bg-gray-800 bg-opacity-50 rounded-2xl p-8 md:p-12 shadow-xl border border-gray-700 max-w-4xl mx-auto">
+				<p class="text-lg md:text-xl leading-relaxed">
+					计算机院科协是计算机学院团委直属三大院级学生组织之一的学术科技组织，以
+					<span class="text-blue-400 font-bold">"务实·高效·助推"</span>为宗旨，专注服务
+					<span class="text-purple-400 font-bold">"挑战杯" "大创"</span>等顶级赛事，助力团队斩获国家级奖项，是连接学术竞赛与校园科技生态的核心桥梁！
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- 收获成长 -->
+	<section id="benefits" class="py-20 px-6 bg-gray-900 bg-opacity-70">
+		<div class="container mx-auto">
+			<h2 class="text-3xl md:text-4xl font-bold text-center mb-16">
+				<span class="border-b-4 border-green-500 pb-2">💡 你能获得什么？</span>
+			</h2>
+
+			<div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+				<!-- 卡片1 -->
+				<div class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700">
+					<div class="w-16 h-16 rounded-full bg-blue-500 flex items-center justify-center mb-4 mx-auto">
+						<i class="fas fa-trophy text-2xl text-white"></i>
+					</div>
+					<h3 class="text-xl font-bold text-center mb-4 text-blue-400">赛事资源</h3>
+					<p class="text-gray-300">
+						深度参与承办"IT科技节""挑战杯""中国国际大学生创新创业大赛""大学生创新创业计划"等竞赛创新计划、活动与比赛
+					</p>
+				</div>
+
+				<!-- 卡片2 -->
+				<div class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700">
+					<div class="w-16 h-16 rounded-full bg-purple-500 flex items-center justify-center mb-4 mx-auto">
+						<i class="fas fa-chart-line text-2xl text-white"></i>
+					</div>
+					<h3 class="text-xl font-bold text-center mb-4 text-purple-400">能力提升</h3>
+					<p class="text-gray-300">
+						策划沙龙、运营公众号、管理项目——五大部门匹配多样技能成长；学生组织工作培养个人能力，部门培训，沙龙活动等
+					</p>
+				</div>
+
+				<!-- 卡片3 -->
+				<div class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700">
+					<div class="w-16 h-16 rounded-full bg-green-500 flex items-center justify-center mb-4 mx-auto">
+						<i class="fas fa-users text-2xl text-white"></i>
+					</div>
+					<h3 class="text-xl font-bold text-center mb-4 text-green-400">竞赛圈层</h3>
+					<p class="text-gray-300">
+						有专属学长学姐讲解关于比赛的事项，对接科技讲师团，解锁资源，助你掌握一手竞赛资源和知识
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- 部门速览 -->
+	<section id="departments" class="py-20 px-6">
+		<div class="container mx-auto">
+			<h2 class="text-3xl md:text-4xl font-bold text-center mb-16">
+				<span class="border-b-4 border-yellow-500 pb-2">🎯 部门速览</span>
+			</h2>
+
+			<div class="max-w-6xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+				<!-- 部门卡片 -->
+				<div
+					class="bg-gradient-to-br from-blue-900 to-gray-900 rounded-xl p-6 card-hover border border-blue-700">
+					<h3 class="text-xl font-bold mb-4 text-blue-400 flex items-center">
+						<i class="fas fa-star text-yellow-400 mr-2"></i> 科普部
+					</h3>
+					<p class="text-gray-300">
+						开展科协讲堂带你遨游知识海洋、科普讲座扩展知识储备为比赛做好准备
+					</p>
+				</div>
+
+				<div
+					class="bg-gradient-to-br from-purple-900 to-gray-900 rounded-xl p-6 card-hover border border-purple-700">
+					<h3 class="text-xl font-bold mb-4 text-purple-400 flex items-center">
+						<i class="fas fa-pen-fancy text-pink-400 mr-2"></i> 网宣部
+					</h3>
+					<p class="text-gray-300">
+						运营公众号打造优质内容阵地，开展创意设计塑造鲜活品牌形象；同步锤炼文案策划、视觉审美与新媒体运营技能
+					</p>
+				</div>
+
+				<div
+					class="bg-gradient-to-br from-green-900 to-gray-900 rounded-xl p-6 card-hover border border-green-700">
+					<h3 class="text-xl font-bold mb-4 text-green-400 flex items-center">
+						<i class="fas fa-briefcase text-blue-300 mr-2"></i> 办公室
+					</h3>
+					<p class="text-gray-300">
+						统筹内联外协搭建协作桥梁，同步锤炼社交能力；优化资源调度保障项目推进，高效提升统筹水平与办公软件技能
+					</p>
+				</div>
+
+				<div
+					class="bg-gradient-to-br from-yellow-900 to-gray-900 rounded-xl p-6 card-hover border border-yellow-700">
+					<h3 class="text-xl font-bold mb-4 text-yellow-400 flex items-center">
+						<i class="fas fa-code text-red-400 mr-2"></i> 技术部
+					</h3>
+					<p class="text-gray-300">
+						组织、筹划、统计各类竞赛、动手实践提升技术能力，推广科学精神、开展科技创新、培养技术人才
+					</p>
+				</div>
+
+				<div class="bg-gradient-to-br from-red-900 to-gray-900 rounded-xl p-6 card-hover border border-red-700">
+					<h3 class="text-xl font-bold mb-4 text-red-400 flex items-center">
+						<i class="fas fa-trophy text-yellow-300 mr-2"></i> 竞赛部
+					</h3>
+					<p class="text-gray-300">
+						负责策划、组织和推广各类科技竞赛，竞赛通知的撰写，激发师生创意，传播科技知识，培育创新人才
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- 加入我们 -->
+	<section id="join" class="py-20 px-6 bg-gradient-to-b from-blue-900 to-gray-900">
+		<div class="container mx-auto text-center">
+			<h2 class="text-3xl md:text-4xl font-bold mb-8">
+				<span class="border-b-4 border-pink-500 pb-2">✨ 加入我们</span>
+			</h2>
+
+			<p class="text-xl md:text-2xl max-w-3xl mx-auto mb-12">
+				无论你是科技小白还是竞赛达人，这里都有你的舞台！
+			</p>
+
+			<div class="max-w-2xl mx-auto bg-gray-800 bg-opacity-50 rounded-2xl p-8 border border-gray-700">
+				<h3 class="text-2xl font-bold mb-6 text-blue-400">报名方式</h3>
+				<p class="text-lg mb-6">扫描下方二维码加入招新群，获取最新资讯</p>
+
+				<div class="flex flex-col md:flex-row justify-center items-center gap-8">
+					<div class="qr-code w-48 h-48 bg-white rounded-xl p-2 flex items-center justify-center">
+						<img src="http://img.wiretender.top/img/20250918165318954.webp" alt="招新群二维码"
+							class="w-full h-full rounded-lg">
+					</div>
+
+					<div class="text-left">
+						<p class="mb-4 flex items-center">
+							<i class="fas fa-calendar-alt text-blue-400 mr-2"></i>
+							<span>招新时间：9月15日-9月30日</span>
+						</p>
+						<p class="mb-4 flex items-center">
+							<i class="fas fa-map-marker-alt text-blue-400 mr-2"></i>
+							<span>招新地点：待定（请关注群通知）</span>
+						</p>
+						<p class="flex items-center">
+							<i class="fas fa-users text-blue-400 mr-2"></i>
+							<span>招新群号：1064050629</span>
+						</p>
+					</div>
+				</div>
+
+				<a href="https://qm.qq.com/q/AAcy2MXUOs" target="_blank"
+					class="inline-block mt-10 px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-bold text-lg hover:from-pink-600 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg animate-glow">
+					立即加入招新群
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- 页脚 -->
+	<footer class="py-10 px-6 bg-gray-900 border-t border-gray-800">
+		<div class="container mx-auto text-center">
+			<div class="flex justify-center space-x-6 mb-6">
+				<a href="#" class="text-2xl text-gray-400 hover:text-blue-400 transition-colors">
+					<i class="fab fa-weixin"></i>
+				</a>
+				<a href="#" class="text-2xl text-gray-400 hover:text-purple-400 transition-colors">
+					<i class="fab fa-qq"></i>
+				</a>
+				<a href="#" class="text-2xl text-gray-400 hover:text-red-400 transition-colors">
+					<i class="fab fa-bilibili"></i>
+				</a>
+			</div>
+			<p class="text-gray-500">© 2025 计算机学院科学技术协会 | 你的大学科技赛事第一站</p>
+		</div>
+	</footer>
+
+	<script>
+		// 创建粒子背景
+		function createParticles () {
+			const container = document.getElementById('particles');
+			const particleCount = 50;
+
+			for (let i = 0; i < particleCount; i++) {
+				const particle = document.createElement('div');
+				particle.classList.add('particle');
+
+				const size = Math.random() * 5 + 2;
+				const posX = Math.random() * 100;
+				const posY = Math.random() * 100;
+				const delay = Math.random() * 15;
+				const duration = 15 + Math.random() * 10;
+
+				particle.style.width = `${size}px`;
+				particle.style.height = `${size}px`;
+				particle.style.left = `${posX}%`;
+				particle.style.top = `${posY}%`;
+				particle.style.animationDelay = `${delay}s`;
+				particle.style.animationDuration = `${duration}s`;
+				particle.style.opacity = Math.random() * 0.5 + 0.1;
+
+				container.appendChild(particle);
+			}
+		}
+
+		// 移动端菜单控制
+		document.getElementById('menu-btn').addEventListener('click', function () {
+			document.getElementById('mobile-menu').classList.remove('translate-x-full');
+		});
+
+		document.getElementById('close-menu').addEventListener('click', function () {
+			document.getElementById('mobile-menu').classList.add('translate-x-full');
+		});
+
+		// 滚动动画
+		function initScrollAnimations () {
+			const observerOptions = {
+				root: null,
+				rootMargin: '0px',
+				threshold: 0.1
+			};
+
+			const observer = new IntersectionObserver((entries) => {
+				entries.forEach(entry => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('animate-float');
+					}
+				});
+			}, observerOptions);
+
+			// 观察所有卡片
+			document.querySelectorAll('.card-hover').forEach(card => {
+				observer.observe(card);
+			});
+		}
+
+		// 页面加载完成后初始化
+		document.addEventListener('DOMContentLoaded', function () {
+			createParticles();
+			initScrollAnimations();
+		});
+	</script>
+</body>
+
+</html>
